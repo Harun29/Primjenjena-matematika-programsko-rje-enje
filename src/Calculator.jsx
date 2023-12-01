@@ -1,14 +1,8 @@
-// FileName: App.js
-
 import React, { useState } from "react";
 import "./App.css";
-import * as math from "mathjs";
 
 function Calculator() {
 	const [expression, setExpression] = useState("");
-	const [screenVal, setScreenVal] = useState("");
-	const [customVariables, setCustomVariables] = useState({});
-	const [mode, setMode] = useState("rad");
 
 	function handleChange(e) {
 		setExpression(e.target.value);
@@ -18,44 +12,13 @@ function Calculator() {
 		setExpression((prevExpression) => prevExpression + input);
 	}
 
-	function calculate() {
-		try {
-			const allVariables = {
-				...customVariables,
-				pi: Math.PI,
-				e: Math.E,
-				fact: math.factorial, 
-				sin: mode === "rad" ? Math.sin : math.sin,
-				cos: mode === "rad" ? Math.cos : math.cos,
-				tan: mode === "rad" ? Math.tan : math.tan,
-				asin: mode === "rad" ? Math.asin : math.asin,
-				acos: mode === "rad" ? Math.acos : math.acos,
-				atan: mode === "rad" ? Math.atan : math.atan,
-			};
-
-			const result = math.evaluate(expression, allVariables);
-			if (typeof result === "number" && !isNaN(result)) {
-				setScreenVal(Number(result).toFixed(4));
-			} else {
-				setScreenVal("Error: Invalid expression");
-			}
-		} catch (error) {
-			setScreenVal("Error: Invalid expression");
-		}
-	}
-
 	function clearScreen() {
 		setExpression("");
-		setScreenVal("");
 	}
 
 	function backspace() {
 		const newExpression = expression.slice(0, -1);
 		setExpression(newExpression);
-	}
-
-	function toggleMode() {
-		setMode(mode === "rad" ? "deg" : "rad");
 	}
 
 	return (
@@ -70,12 +33,11 @@ function Calculator() {
 							value={expression}
 							onChange={handleChange}
 						/>
-						<div className="output">Output: {screenVal}</div>
 					</div>
 					<div className="button-section">
 						<div className="numeric-pad">
 							{["1", "2", "3", "4", "5",
-								"6", "7", "8", "9", "0"].map(
+								"6", "7", "8", "9", "0", "x"].map(
 									(input) => (
 										<button key={input}
 											onClick={() =>
@@ -121,10 +83,6 @@ function Calculator() {
 							<button className="clear-button"
 								onClick={clearScreen}>
 								C
-							</button>
-							<button className="equals-button"
-								onClick={calculate}>
-								=
 							</button>
 							<button className="backspace-button"
 								onClick={backspace}>
