@@ -6,7 +6,7 @@ import Navbar from './projects/Navbar';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Objasnjenje from './projects/Naslov';
 import functionPlot from 'function-plot'
-import { derivative } from 'mathjs';
+import { derivative, exp } from 'mathjs';
 
 function App() {
   const [expression, setExpression] = useState("");
@@ -41,7 +41,7 @@ function App() {
       const parsedDerivative = izvod ? izvod : "cos(x)";
   
       functionPlot({
-        target: '#graph',
+        target: '#test',
         yAxis: { domain: [-9, 9] },
         tip: {
           renderer: function () {}
@@ -49,7 +49,7 @@ function App() {
         grid: true,
         data: [
           {
-            fn: parsedExpression,
+            fn: expression,
             derivative: {
               fn: parsedDerivative,
               updateOnMouseMove: true
@@ -149,7 +149,7 @@ function App() {
               <Route path='/polovljenje' element={<PolovljenjeIntervala expression={expression} />} />
               <Route path='/regula-falsi' element={<MetodaRegulaFalsi expression={expression} />} />
             </Routes>
-            <div id="graph">Function: {expression ? expression : 'sin(x)'}</div>
+            <div id="test">function: {expression ? expression : 'sin(x)'}</div>
           </div>
         </header>
       </div>

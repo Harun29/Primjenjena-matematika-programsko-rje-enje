@@ -77,6 +77,7 @@ body {
   align-items: center;
   justify-content: space-evenly;
   max-width: 800px;
+  padding: 20px;
 }
 
 .App-header{
@@ -94,7 +95,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
+  max-width: 500px;
   max-height: 390px;
 }
 
@@ -109,8 +110,8 @@ body {
 
 .button-section {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 button {
@@ -122,14 +123,31 @@ button {
   cursor: pointer;
 }
 
+.numeric-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .numeric-pad button {
   background-color: #4caf50;
   color: #fff;
+  width: 50px;
+}
+
+.operators{
+  width: 230px;
 }
 
 .operators button {
   background-color: #2196f3;
   color: #fff;
+}
+
+.control-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  justify-content: end;
 }
 
 .control-buttons button {
@@ -261,7 +279,7 @@ button {
   justify-content: center;
 }
 
-#graph{
+#test{
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
