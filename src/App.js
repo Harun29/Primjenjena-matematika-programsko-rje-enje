@@ -2,9 +2,10 @@ import './App.css';
 import PolovljenjeIntervala from './projects/polovljenjeIntervala';
 import MetodaRegulaFalsi from './projects/metodaRegulaFalsi';
 import { useState } from 'react';
+import Navbar from './projects/Navbar';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
-
   const [expression, setExpression] = useState("");
 
   function handleChange(e) {
@@ -25,83 +26,88 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <>
-          <div className="calc-app">
-            <div className="calc-body">
-              <div className="input-section">
-                <input
-                  className="screen"
-                  type="text"
-                  value={expression}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="button-section">
-                <div className="numeric-pad">
-                  {["1", "2", "3", "4", "5",
-                    "6", "7", "8", "9", "0", "x"].map(
-                      (input) => (
-                        <button key={input}
-                          onClick={() =>
-                            handleClick(input)}>
-                          {input}
-                        </button>
-                      )
-                    )}
-                  <button onClick={() =>
-                    handleClick(".")}>,</button>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <header className="App-header">
+          <>
+            <div className="calc-app">
+              <div className="calc-body">
+                <div className="input-section">
+                  <input
+                    className="screen"
+                    type="text"
+                    value={expression}
+                    onChange={handleChange}
+                  />
                 </div>
-                <div className="operators">
-                  {[
-                    "+",
-                    "-",
-                    "*",
-                    "/",
-                    "^",
-                    "sqrt(",
-                    "sin(",
-                    "cos(",
-                    "tan(",
-                    "cbrt(",
-                    "asin(",
-                    "acos(",
-                    "atan(",
-                    "(",
-                    ")",
-                  ].map((input) => (
-                    <button key={input}
-                      onClick={() =>
-                        handleClick(input)}>
-                      {input}
-                    </button>
-                  ))}
+                <div className="button-section">
+                  <div className="numeric-pad">
+                    {["1", "2", "3", "4", "5",
+                      "6", "7", "8", "9", "0", "x"].map(
+                        (input) => (
+                          <button key={input}
+                            onClick={() =>
+                              handleClick(input)}>
+                            {input}
+                          </button>
+                        )
+                      )}
+                    <button onClick={() =>
+                      handleClick(".")}>,</button>
+                  </div>
+                  <div className="operators">
+                    {[
+                      "+",
+                      "-",
+                      "*",
+                      "/",
+                      "^",
+                      "sqrt(",
+                      "sin(",
+                      "cos(",
+                      "tan(",
+                      "cbrt(",
+                      "asin(",
+                      "acos(",
+                      "atan(",
+                      "(",
+                      ")",
+                    ].map((input) => (
+                      <button key={input}
+                        onClick={() =>
+                          handleClick(input)}>
+                        {input}
+                      </button>
+                    ))}
 
-                  <button onClick={() =>
-                    handleClick("pi")}>Pi</button>
-                  <button onClick={() =>
-                    handleClick("fact(")}>Factorial</button>
-                </div>
-                <div className="control-buttons">
-                  <button className="clear-button"
-                    onClick={clearScreen}>
-                    C
-                  </button>
-                  <button className="backspace-button"
-                    onClick={backspace}>
-                    del
-                  </button>
+                    <button onClick={() =>
+                      handleClick("pi")}>Pi</button>
+                    <button onClick={() =>
+                      handleClick("fact(")}>Factorial</button>
+                  </div>
+                  <div className="control-buttons">
+                    <button className="clear-button"
+                      onClick={clearScreen}>
+                      C
+                    </button>
+                    <button className="backspace-button"
+                      onClick={backspace}>
+                      del
+                    </button>
+                  </div>
                 </div>
               </div>
+              <div className="variables"></div>
             </div>
-            <div className="variables"></div>
-          </div>
-        </>
-        <PolovljenjeIntervala expression={expression}></PolovljenjeIntervala>
-        {/* <MetodaRegulaFalsi expression={expression}></MetodaRegulaFalsi> */}
-      </header>
-    </div>
+          </>
+          <Routes>
+            <Route path='/polovljenje' element={<PolovljenjeIntervala expression={expression} />} />
+            <Route path='/regula-falsi' element={<MetodaRegulaFalsi expression={expression} />} />
+          </Routes>
+        </header>
+      </div>
+    </Router>
   );
 }
 
