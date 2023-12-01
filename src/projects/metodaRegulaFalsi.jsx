@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-const BisectionMethod = () => {
+const MetodaRegulaFalsi = () => {
   const [a, setA] = useState();
   const [b, setB] = useState();
-  const [funct, setFunct] = useState("(x**2)-2");
+  const [funct, setFunct] = useState();
   const [preciznost, setPreciznost] = useState();
   const [decimals, setDecimals] = useState();
   const [iterations, setIterations] = useState([]);
@@ -33,7 +33,7 @@ const BisectionMethod = () => {
 
     let aVal = a;
     let bVal = b;
-    let c = (aVal + bVal) / 2;
+    let c = bVal-((bVal-aVal)/(fb-fa))*fb;
     let fc = eval(funct.replace(/x/g, c));
 
     while (Math.abs(fc) > preciznost) {
@@ -114,7 +114,7 @@ const BisectionMethod = () => {
               <th>fa</th>
               <th>b</th>
               <th>fb</th>
-              <th>c</th>
+              <th>xi</th>
               <th>fc</th>
             </tr>
           </thead>
@@ -137,7 +137,7 @@ const BisectionMethod = () => {
         {finalResult !== null && (
           <div>
             <h3>Finalni rezultat:</h3>
-            <p>{`c: ${finalResult}`}</p>
+            <p>{`xi: ${finalResult}`}</p>
           </div>
         )}
       </div>
@@ -145,4 +145,4 @@ const BisectionMethod = () => {
   );
 };
 
-export default BisectionMethod;
+export default MetodaRegulaFalsi;
