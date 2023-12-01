@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useCalculator from "../CalculateHook";
 
-const BisectionMethod = ({ expression }) => {
+const PolovljenjeIntervala = ({ expression }) => {
   const { calculate } = useCalculator();
   const [a, setA] = useState();
   const [b, setB] = useState();
@@ -189,4 +189,4 @@ const BisectionMethod = ({ expression }) => {
   );
 };
 
-export default BisectionMethod;
+export default PolovljenjeIntervala;

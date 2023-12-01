@@ -4,6 +4,7 @@ import MetodaRegulaFalsi from './projects/metodaRegulaFalsi';
 import { useState } from 'react';
 import Navbar from './projects/Navbar';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Objasnjenje from './projects/Naslov';
 
 function App() {
   const [expression, setExpression] = useState("");
@@ -99,6 +100,12 @@ function App() {
                 </div>
               </div>
               <div className="variables"></div>
+            <div className='method-explanation'>
+              <Routes>
+                <Route path='/polovljenje' element={<Objasnjenje metoda="polovljenje" />} />
+                <Route path='/regula-falsi' element={<Objasnjenje metoda="regula"/>} />
+              </Routes>
+            </div>
             </div>
           </>
           <Routes>
