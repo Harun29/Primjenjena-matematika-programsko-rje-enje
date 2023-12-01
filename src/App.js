@@ -1,13 +1,22 @@
 import './App.css';
 import PolovljenjeIntervala from './projects/polovljenjeIntervala';
 import MetodaRegulaFalsi from './projects/metodaRegulaFalsi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './projects/Navbar';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Objasnjenje from './projects/Naslov';
+import functionPlot from 'function-plot'
+import { derivative } from 'mathjs';
 
 function App() {
   const [expression, setExpression] = useState("");
+  const [izvod, setIzvod] = useState("");
+
+  useEffect(() => {
+    if(izvod){
+      setIzvod(derivative(expression, "x"))
+    }
+  }, [expression])
 
   function handleChange(e) {
     setExpression(e.target.value);
@@ -26,10 +35,37 @@ function App() {
     setExpression(newExpression);
   }
 
+  useEffect(() => {
+    try {
+      const parsedExpression = expression ? expression : "sin(x)";
+      const parsedDerivative = izvod ? izvod : "cos(x)";
+  
+      functionPlot({
+        target: '#graph',
+        yAxis: { domain: [-9, 9] },
+        tip: {
+          renderer: function () {}
+        },
+        grid: true,
+        data: [
+          {
+            fn: parsedExpression,
+            derivative: {
+              fn: parsedDerivative,
+              updateOnMouseMove: true
+            }
+          }
+        ]
+      });
+    } catch (error) {
+      console.error("Error in function-plot:", error);
+    }
+  }, [expression, izvod]);
+
   return (
     <Router>
       <div className="App">
-        <Navbar />
+      <Navbar />
         <header className="App-header">
           <>
             <div className="calc-app">
@@ -108,10 +144,13 @@ function App() {
             </div>
             </div>
           </>
-          <Routes>
-            <Route path='/polovljenje' element={<PolovljenjeIntervala expression={expression} />} />
-            <Route path='/regula-falsi' element={<MetodaRegulaFalsi expression={expression} />} />
-          </Routes>
+          <div className='all-results'>
+            <Routes>
+              <Route path='/polovljenje' element={<PolovljenjeIntervala expression={expression} />} />
+              <Route path='/regula-falsi' element={<MetodaRegulaFalsi expression={expression} />} />
+            </Routes>
+            <div id="graph">Function: {expression ? expression : 'sin(x)'}</div>
+          </div>
         </header>
       </div>
     </Router>

@@ -11,6 +11,8 @@ const PolovljenjeIntervala = ({ expression }) => {
   const [iterations, setIterations] = useState([]);
   const [finalResult, setFinalResult] = useState(null);
 
+
+
   useEffect(() => {
     setFunct(expression);
   }, [expression])
@@ -157,7 +159,7 @@ const PolovljenjeIntervala = ({ expression }) => {
               <th>fa</th>
               <th>b</th>
               <th>fb</th>
-              <th>xi</th>
+              <th>c</th>
               <th>Razlika</th>
             </tr>
           </thead>

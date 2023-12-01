@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import * as math from 'mathjs';
 
 const useCalculator = () => {
