@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import useCalculator from "../CalculateHook";
 
-const MetodaRegulaFalsi = () => {
+const MetodaRegulaFalsi = ({ expression }) => {
+  const { calculate } = useCalculator();
   const [a, setA] = useState();
   const [b, setB] = useState();
   const [funct, setFunct] = useState();
   const [preciznost, setPreciznost] = useState();
   const [decimals, setDecimals] = useState();
   const [iterations, setIterations] = useState([]);
+
   const [finalResult, setFinalResult] = useState(null);
+
+  useEffect(() => {
+    setFunct(expression);
+  }, [expression]);
 
   const handleCalculateClick = () => {
     const iterationsResult = polovljenjeIntervala();
@@ -23,8 +30,8 @@ const MetodaRegulaFalsi = () => {
   const polovljenjeIntervala = () => {
     let result = [];
 
-    let fa = eval(funct.replace(/x/g, a));
-    let fb = eval(funct.replace(/x/g, b));
+    let fa = calculate(funct.replace(/x/g, a));
+    let fb = calculate(funct.replace(/x/g, b));
 
     if (fa * fb >= 0) {
       console.error("Interval nije ispravno odabran.");
@@ -33,80 +40,115 @@ const MetodaRegulaFalsi = () => {
 
     let aVal = a;
     let bVal = b;
-    let c = bVal-((bVal-aVal)/(fb-fa))*fb;
-    let fc = eval(funct.replace(/x/g, c));
+    let c = bVal - ((bVal - aVal) / (fb - fa)) * fb;
+    let fc = calculate(funct.replace(/x/g, c));
+    let previousC = c;
+    let count = 0;
 
-    while (Math.abs(fc) > preciznost) {
+    while (Math.abs(c - previousC) > preciznost || count === 0) {
       result.push({
         a: aVal.toFixed(decimals),
         fa: fa.toFixed(decimals),
         b: bVal.toFixed(decimals),
         fb: fb.toFixed(decimals),
         c: c.toFixed(decimals),
-        fc: fc.toFixed(decimals),
+        difference: count == 0 ? "-" : (c - previousC).toFixed(decimals)
       });
+      count += 1;
 
       if (fa * fc < 0) {
         bVal = c;
+        fb = calculate(funct.replace(/x/g, bVal));
       } else {
         aVal = c;
+        fa = calculate(funct.replace(/x/g, aVal));
       }
 
-      c = (aVal + bVal) / 2;
-      fc = eval(funct.replace(/x/g, c));
+      previousC = c;
+      c = bVal - ((bVal - aVal) / (fb - fa)) * fb;
+      fc = calculate(funct.replace(/x/g, c));
     }
-
-    // Dodaj poslednju iteraciju
+    
     result.push({
       a: aVal.toFixed(decimals),
       fa: fa.toFixed(decimals),
       b: bVal.toFixed(decimals),
       fb: fb.toFixed(decimals),
       c: c.toFixed(decimals),
-      fc: fc.toFixed(decimals),
+      difference: (c - previousC).toFixed(decimals)
     });
 
     return result;
   };
 
   return (
-    <div>
-      <div>
-        <label>
-          a:
-          <input type="number" value={a} onChange={(e) => setA(Number(e.target.value))} />
-        </label>
+    <div className="calculator-container">
+      <div className="form-section">
+        <div className="form-item">
+          <label>
+            a:
+            <input
+              type="number"
+              value={a}
+              onChange={(e) => setA(Number(e.target.value))}
+              className="form-input"
+            />
+          </label>
+        </div>
+        <div className="form-item">
+          <label>
+            b:
+            <input
+              type="number"
+              value={b}
+              onChange={(e) => setB(Number(e.target.value))}
+              className="form-input"
+            />
+          </label>
+        </div>
+        <div className="form-item">
+          <label>
+            Funkcija:
+            <input
+              type="text"
+              value={funct}
+              onChange={(e) => setFunct(e.target.value)}
+              disabled
+              className="form-input-disabled"
+            />
+          </label>
+        </div>
+        <div className="form-item">
+          <label>
+            Preciznost:
+            <input
+              type="number"
+              value={preciznost}
+              onChange={(e) => setPreciznost(Number(e.target.value))}
+              className="form-input"
+            />
+          </label>
+        </div>
+        <div className="form-item">
+          <label>
+            Decimalna mesta:
+            <input
+              type="text"
+              value={decimals}
+              onChange={(e) => setDecimals(Number(e.target.value))}
+              className="form-input"
+            />
+          </label>
+        </div>
+        <div className="form-item">
+          <button onClick={handleCalculateClick} className="calculate-button">
+            Izračunaj
+          </button>
+        </div>
       </div>
-      <div>
-        <label>
-          b:
-          <input type="number" value={b} onChange={(e) => setB(Number(e.target.value))} />
-        </label>
-      </div>
-      <div>
-        <label>
-          Funkcija:
-          <input type="text" value={funct} onChange={(e) => setFunct(e.target.value)} />
-        </label>
-      </div>
-      <div>
-        <label>
-          Preciznost:
-          <input type="number" value={preciznost} onChange={(e) => setPreciznost(Number(e.target.value))} />
-        </label>
-      </div>
-      <div>
-        <label>
-          Decimalna mesta:
-          <input type="text" value={decimals} onChange={(e) => setDecimals(Number(e.target.value))} />
-        </label>
-      </div>
-      <div>
-        <button onClick={handleCalculateClick}>Izracunaj</button>
-      </div>
-      <div>
+      <div className="results-section">
         <h3>Rezultati iteracija:</h3>
-        <table>
+        <table className="results-table">
           <thead>
             <tr>
               <th>Iteracija</th>
@@ -115,7 +157,7 @@ const MetodaRegulaFalsi = () => {
               <th>b</th>
               <th>fb</th>
               <th>xi</th>
-              <th>fc</th>
+              <th>Razlika</th>
             </tr>
           </thead>
           <tbody>
@@ -127,19 +169,19 @@ const MetodaRegulaFalsi = () => {
                 <td>{iteration.b}</td>
                 <td>{iteration.fb}</td>
                 <td>{iteration.c}</td>
-                <td>{iteration.fc}</td>
+                <td>{iteration.difference}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      <div>
-        {finalResult !== null && (
-          <div>
-            <h3>Finalni rezultat:</h3>
-            <p>{`xi: ${finalResult}`}</p>
-          </div>
-        )}
+        <div className="final-result">
+          {finalResult !== null && (
+            <div>
+              <h3>Finalni rezultat:</h3>
+              <p>{`c: ${finalResult}`}</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

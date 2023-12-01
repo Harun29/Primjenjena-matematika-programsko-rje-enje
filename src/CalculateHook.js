@@ -2,7 +2,6 @@ import { useState } from 'react';
 import * as math from 'mathjs';
 
 const useCalculator = () => {
-  const [screenVal, setScreenVal] = useState('');
 
   const calculate = (expression) => {
     try {
@@ -20,16 +19,16 @@ const useCalculator = () => {
 
       const result = math.evaluate(expression, allVariables);
       if (typeof result === "number" && !isNaN(result)) {
-        setScreenVal(Number(result).toFixed(4));
+        return (Number(result));
       } else {
-        setScreenVal("Error: Invalid expression");
+        return ("Error: Invalid expression");
       }
     } catch (error) {
-      setScreenVal("Error: Invalid expression");
+      return ("Error: Invalid expression");
     }
   };
 
-  return { screenVal, calculate };
+  return { calculate };
 };
 
 export default useCalculator;
