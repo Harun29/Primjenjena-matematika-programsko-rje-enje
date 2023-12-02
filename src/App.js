@@ -4,7 +4,7 @@ import Navbar from './projects/Navbar';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Objasnjenje from './projects/Naslov';
 import functionPlot from 'function-plot'
-import { derivative, exp } from 'mathjs';
+import { derivative, parse } from 'mathjs';
 import MetodeNaZatvorenom from './projects/MetodeNaZatvorenom';
 
 function App() {
@@ -12,10 +12,15 @@ function App() {
   const [izvod, setIzvod] = useState("");
 
   useEffect(() => {
-    if(izvod){
-      setIzvod(derivative(expression, "x"))
+    try {
+      const parsedExpression = expression ? expression.replace(/e/g, 2.718281828459045) : "sin(x)";
+      const parsedDerivative = derivative(parse(parsedExpression), 'x', { simplify: true }).toString();
+
+      setIzvod(parsedDerivative);
+    } catch (err) {
+      console.error(err);
     }
-  }, [expression])
+  }, [expression]);
 
   function handleChange(e) {
     setExpression(e.target.value);
@@ -36,9 +41,9 @@ function App() {
 
   useEffect(() => {
     try {
-      const parsedExpression = expression ? expression : "sin(x)";
+      const parsedExpression = expression ? expression.replace(/e/g, 'Math.exp(1)') : "sin(x)";
       const parsedDerivative = izvod ? izvod : "cos(x)";
-  
+
       functionPlot({
         target: '#test',
         yAxis: { domain: [-9, 9] },
@@ -60,6 +65,8 @@ function App() {
       console.error("Error in function-plot:", error);
     }
   }, [expression, izvod]);
+  
+  
 
   return (
     <Router>
@@ -119,6 +126,8 @@ function App() {
 
                     <button onClick={() =>
                       handleClick("pi")}>Pi</button>
+                    <button onClick={() =>
+                      handleClick("e")}>e</button>
                     <button onClick={() =>
                       handleClick("fact(")}>Factorial</button>
                   </div>

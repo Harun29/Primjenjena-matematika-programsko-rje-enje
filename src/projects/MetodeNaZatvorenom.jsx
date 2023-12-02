@@ -49,7 +49,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
     let previousC = c;
     let count = 0;
 
-    while (Math.abs(c - previousC) > preciznost || count === 0) {
+    while (Math.abs(c - previousC) > preciznost || count == 0) {
       result.push({
         a: aVal.toFixed(decimals),
         fa: fa.toFixed(decimals),
