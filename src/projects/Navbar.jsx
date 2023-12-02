@@ -7,7 +7,7 @@ const Navbar = () => {
         <h1>PMIS</h1>
       </div>
       <div className="methods">
-        <h2>Metode</h2>
+        <h2>Metode Na Zatvorenom Intervalu</h2>
         <ul>
           <Link to="/polovljenje">
             <li>
@@ -19,6 +19,9 @@ const Navbar = () => {
               Metoda Regula Falsi
             </li>
           </Link>
+        </ul>
+        <h2>Metode Na Otvorenom Intervalu</h2>
+        <ul>
           <Link to="/prosta-iteracija">
             <li>
               Metoda Proste Iteracije

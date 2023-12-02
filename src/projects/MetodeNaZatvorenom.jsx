@@ -93,6 +93,8 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
 
   return (
     <div className="calculator-container">
+      <h3>Rezultati iteracija:</h3>
+      <div className="calculator-container-plus">
       <div className="form-section">
         <div className="form-item">
           <label>
@@ -157,7 +159,6 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
         </div>
       </div>
       <div className="results-section">
-        <h3>Rezultati iteracija:</h3>
         <table className="results-table">
           <thead>
             <tr>
@@ -192,6 +193,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
 

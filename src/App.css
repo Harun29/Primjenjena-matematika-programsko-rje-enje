@@ -194,16 +194,22 @@ button {
 .calculator-container {
   max-width: 70%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   background-color: inherit;
   margin: 0;
   padding: 0;
 }
 
+.calculator-container-plus{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .form-section {
   background-color: #fff;
   padding: 20px;
-  margin: 20px 0 0;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   width: 200px;
@@ -246,13 +252,16 @@ button {
 
 .results-section {
   text-align: center;
-  margin: 20px 30px 0;
+  margin: 0 30px 0;
   width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .results-table {
   width: 100%;
-  margin-top: 20px;
   border-collapse: collapse;
   border-radius: 8px;
   overflow: hidden;
@@ -303,4 +312,5 @@ button {
 #test{
   display: flex;
   flex-direction: column-reverse;
+  font-size: 28px;
 }
