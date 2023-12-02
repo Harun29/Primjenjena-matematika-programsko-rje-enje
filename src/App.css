@@ -97,7 +97,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  max-width: 800px;
   padding: 20px;
 }
 
@@ -116,7 +115,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  width: 600px;
   max-height: 390px;
 }
 
@@ -156,12 +155,15 @@ button {
 }
 
 .operators{
-  width: 230px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
 }
 
 .operators button {
   background-color: #2196f3;
   color: #fff;
+  width: 60px;
 }
 
 .control-buttons {
