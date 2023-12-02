@@ -36,6 +36,10 @@ const Navbar = () => {
           </Link>
         </ul>
       </div>
+      <div className="signature">
+        <p>Harun Ibrahimović</p>
+        <a href="https://github.com/Harun29/Primjenjena-matematika-programsko-rjesenje">GitHub repo</a>
+      </div>
     </div>
   );
 };

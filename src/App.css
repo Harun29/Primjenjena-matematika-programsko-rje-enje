@@ -54,8 +54,29 @@
   color: #3498db; /* Hover color */
 }
 
+.signature {
+  padding: 15px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 14px;
+}
 
-/* */
+.signature p {
+  margin: 0;
+  font-weight: 100;
+  color: #777;
+}
+
+.signature a {
+  color: #777;
+  text-decoration: none;
+}
+
+
+/* ----------------------- */
 
 body {
   font-family: 'Arial', sans-serif;
