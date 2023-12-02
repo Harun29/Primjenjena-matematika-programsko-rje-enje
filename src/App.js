@@ -1,12 +1,11 @@
 import './App.css';
-import PolovljenjeIntervala from './projects/polovljenjeIntervala';
-import MetodaRegulaFalsi from './projects/metodaRegulaFalsi';
 import { useEffect, useState } from 'react';
 import Navbar from './projects/Navbar';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Objasnjenje from './projects/Naslov';
 import functionPlot from 'function-plot'
 import { derivative, exp } from 'mathjs';
+import MetodeNaZatvorenom from './projects/MetodeNaZatvorenom';
 
 function App() {
   const [expression, setExpression] = useState("");
@@ -49,7 +48,7 @@ function App() {
         grid: true,
         data: [
           {
-            fn: expression,
+            fn: parsedExpression,
             derivative: {
               fn: parsedDerivative,
               updateOnMouseMove: true
@@ -146,8 +145,8 @@ function App() {
           </>
           <div className='all-results'>
             <Routes>
-              <Route path='/polovljenje' element={<PolovljenjeIntervala expression={expression} />} />
-              <Route path='/regula-falsi' element={<MetodaRegulaFalsi expression={expression} />} />
+              <Route path='/polovljenje' element={<MetodeNaZatvorenom expression={expression} method={"bisection"} />} />
+              <Route path='/regula-falsi' element={<MetodeNaZatvorenom expression={expression} method={"regulafalsi"} />} />
             </Routes>
             <div id="test">function: {expression ? expression : 'sin(x)'}</div>
           </div>

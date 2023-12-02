@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useCalculator from "../CalculateHook";
 
-const PolovljenjeIntervala = ({ expression }) => {
+const MetodeNaZatvorenom = ({ expression, method }) => {
   const { calculate } = useCalculator();
   const [a, setA] = useState();
   const [b, setB] = useState();
@@ -10,8 +10,6 @@ const PolovljenjeIntervala = ({ expression }) => {
   const [decimals, setDecimals] = useState();
   const [iterations, setIterations] = useState([]);
   const [finalResult, setFinalResult] = useState(null);
-
-
 
   useEffect(() => {
     setFunct(expression);
@@ -41,7 +39,12 @@ const PolovljenjeIntervala = ({ expression }) => {
 
     let aVal = a;
     let bVal = b;
-    let c = (aVal + bVal) / 2;
+    let c;
+    if(method == "bisection"){
+      c = (aVal + bVal) / 2;
+    }else{
+      c = bVal - ((bVal - aVal) / (fb - fa)) * fb;
+    }
     let fc = calculate(funct.replace(/x/g, c));
     let previousC = c;
     let count = 0;
@@ -67,7 +70,11 @@ const PolovljenjeIntervala = ({ expression }) => {
       }
 
       previousC = c;
-      c = (aVal + bVal) / 2;
+      if(method == "bisection"){
+        c = (aVal + bVal) / 2;
+      }else{
+        c = bVal - ((bVal - aVal) / (fb - fa)) * fb;
+      }
       fc = calculate(funct.replace(/x/g, c));
     }
 
@@ -159,7 +166,7 @@ const PolovljenjeIntervala = ({ expression }) => {
               <th>fa</th>
               <th>b</th>
               <th>fb</th>
-              <th>c</th>
+              {method == "bisection" ? <th>c</th> : <th>xi</th>}
               <th>Razlika</th>
             </tr>
           </thead>
@@ -181,7 +188,7 @@ const PolovljenjeIntervala = ({ expression }) => {
           {finalResult !== null && (
             <div>
               <h3>Finalni rezultat:</h3>
-              <p>{`c: ${finalResult}`}</p>
+              <p>{method == "bisection" ? `c: ${finalResult}` : `xi: ${finalResult}`}</p>
             </div>
           )}
         </div>
@@ -191,4 +198,4 @@ const PolovljenjeIntervala = ({ expression }) => {
   );
 };
 
-export default PolovljenjeIntervala;
+export default MetodeNaZatvorenom;
