@@ -149,6 +149,7 @@ function App() {
               <Routes>
                 <Route path='/polovljenje' element={<Objasnjenje metoda="polovljenje" />} />
                 <Route path='/regula-falsi' element={<Objasnjenje metoda="regula"/>} />
+                <Route path='/prosta-iteracija' element={<Objasnjenje metoda="prosta-iteracija"/>} />
               </Routes>
             </div>
             </div>
