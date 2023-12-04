@@ -27,12 +27,12 @@ const Navbar = () => {
               Metoda Proste Iteracije
             </li >
           </Link>
-          <Link to="/newton-raphson">
+          <Link to="/newton">
             <li>
               Newton-Raphsonova Metoda
             </li>
           </Link>
-          <Link to="/modifikovana-newtonova">
+          <Link to="/modifikovan-newton">
             <li>
               Modifikovana Newtonova Metoda
             </li>

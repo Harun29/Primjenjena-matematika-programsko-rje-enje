@@ -6,7 +6,7 @@ import Objasnjenje from './projects/Naslov';
 import functionPlot from 'function-plot'
 import { derivative, parse } from 'mathjs';
 import MetodeNaZatvorenom from './projects/MetodeNaZatvorenom';
-import ProstaIteracija from './projects/MetodaProsteIteracije';
+import MetodeNaOtvorenom from './projects/MetodeNaOtvorenom';
 
 function App() {
   const [expression, setExpression] = useState("");
@@ -158,7 +158,9 @@ function App() {
             <Routes>
               <Route path='/polovljenje' element={<MetodeNaZatvorenom expression={expression} method={"bisection"} />} />
               <Route path='/regula-falsi' element={<MetodeNaZatvorenom expression={expression} method={"regulafalsi"} />} />
-              <Route path='/prosta-iteracija' element={<ProstaIteracija expression={expression} />} />
+              <Route path='/prosta-iteracija' element={<MetodeNaOtvorenom expression={expression} derivative={izvod} method={"prosta-iteracija"}/>} />
+              <Route path='/newton' element={<MetodeNaOtvorenom expression={expression} derivative={izvod} method={"newton"}/>} />
+              <Route path='/modifikovan-newton' element={<MetodeNaOtvorenom expression={expression} derivative={izvod} method={"modifikovana-newtonova"}/>} />
             </Routes>
             <div id="test">function: {expression ? expression : 'sin(x)'}</div>
           </div>

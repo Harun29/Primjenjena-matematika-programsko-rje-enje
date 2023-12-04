@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useCalculator from "../CalculateHook";
 
-const ProstaIteracija = ({ expression }) => {
+const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const { calculate } = useCalculator();
   const [initialX, setInitialX] = useState();
   const [tolerance, setTolerance] = useState();
   const [decimalPlaces, setDecimalPlaces] = useState();
   const [iterations, setIterations] = useState([]);
   const [finalResult, setFinalResult] = useState(null);
+  const [infinity, setInfinity] = useState(false);
+
+  useEffect(() => {
+    console.log(method)
+    console.log(expression)
+  }, [method, expression])
+
+  useEffect(() => {
+    expression = expression.replace(/e/g, 2.718281828459045)
+  }, [expression])
 
   const handleCalculateClick = () => {
     const iterationsResult = simpleIteration();
@@ -24,29 +34,50 @@ const ProstaIteracija = ({ expression }) => {
     let result = [];
 
     let xi = initialX;
-    let xiPlus1 = calculate(expression.replace(/x/g, xi));
+    let expressionValue = calculate(expression.replace(/x/g, xi))
+    let derivativeValue = calculate(derivative.replace(/x/g, xi))
+    let xiPlus1;
+    if(method === "newton" || method === "modifikovana-newtonova"){
+      xiPlus1 = calculate(`${xi}-(${expressionValue}/${derivativeValue})`);
+    }else{
+      xiPlus1 = expressionValue;
+      console.log("type of xiPlus1: ",typeof(xiPlus1))
+    }
     let count = 0;
-
-    while (Math.abs(xiPlus1 - xi) > tolerance || count === 0) {
+    
+    while ((Math.abs(xiPlus1 - xi) > tolerance || count === 0)  &&  typeof(xiPlus1) == "number") {
+      console.log("xiPlus1: ",xiPlus1)
+      console.log("xi: ",xi)
       result.push({
         iteration: count + 1,
         xi: xi.toFixed(decimalPlaces),
         xiPlus1: xiPlus1.toFixed(decimalPlaces),
         difference: count === 0 ? "-" : (xiPlus1 - xi).toFixed(decimalPlaces),
       });
-
+      
       count += 1;
-
+      
       xi = xiPlus1;
-      xiPlus1 = calculate(expression.replace(/x/g, xi));
+      expressionValue = calculate(expression.replace(/x/g, xi))
+      if(method === "newton"){
+        derivativeValue = calculate(derivative.replace(/x/g, xi))
+      }if(method === "modifikovana-newtonova" || method === "newton"){
+        xiPlus1 = calculate(`${xi}-(${expressionValue}/${derivativeValue})`);
+      }else{
+        xiPlus1 = expressionValue;
+      }
     }
-
-    result.push({
-      iteration: count + 1,
-      xi: xi.toFixed(decimalPlaces),
-      xiPlus1: xiPlus1.toFixed(decimalPlaces),
-      difference: (xiPlus1 - xi).toFixed(decimalPlaces),
-    });
+    
+    if(typeof(xiPlus1) == "number"){
+      result.push({
+        iteration: count + 1,
+        xi: xi.toFixed(decimalPlaces),
+        xiPlus1: xiPlus1.toFixed(decimalPlaces),
+        difference: (xiPlus1 - xi).toFixed(decimalPlaces),
+      });
+    }else{
+      setInfinity(true)
+    }
 
     return result;
   };
@@ -130,4 +161,4 @@ const ProstaIteracija = ({ expression }) => {
   );
 };
 
-export default ProstaIteracija;
+export default MetodeNaOtvorenom;
