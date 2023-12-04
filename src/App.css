@@ -188,7 +188,8 @@ button {
 
 .objasnjenje{
   padding: 50px;
-  width: 400px;
+  max-width: 400px;
+  height: 200px;
 }
 
 /* METODE */
@@ -207,6 +208,7 @@ button {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
 }
 
 .form-section {
@@ -214,7 +216,7 @@ button {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  width: 200px;
+  width: 30%;
   margin-right: 30px;
 }
 
@@ -256,7 +258,7 @@ button {
 .results-section {
   text-align: center;
   margin: 0 30px 0;
-  width: 600px;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -308,12 +310,14 @@ button {
 
 .all-results{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  max-width: 100%;
 }
 
 #test{
   display: flex;
   flex-direction: column-reverse;
   font-size: 28px;
+  margin-top: 40px;
 }

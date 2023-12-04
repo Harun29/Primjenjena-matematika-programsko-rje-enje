@@ -14,6 +14,12 @@ const Objasnjenje = ({ metoda }) => {
     } else if (metoda === "prosta-iteracija") {
       setNaslov("Metoda Proste Iteracije");
       setDescription("Metoda proste iteracije je numerički algoritam za rešavanje jednačina. Ideja je iterativno poboljšavati pretpostavljeno rešenje. Na osnovu početne tačke, koristi se iterativna formula da bi se dobile naredne vrednosti, ažurirajući pretpostavljeno rešenje sve dok ne dostignemo dovoljnu preciznost.");
+    } else if (metoda === "newton") {
+      setNaslov("Newton-Raphsonova Metoda");
+      setDescription("Newton-Raphsonova metoda je iterativni numerički algoritam za aproksimaciju korena realne funkcije. Metoda zahteva početnu pretpostavku i iterativno konvergira ka tačnom rešenju, koristeći tangenti liniju funkcije.");
+    } else if (metoda === "modifikovan-newton") {
+      setNaslov("Modifikovana Newton-Raphsonova Metoda");
+      setDescription("Modifikovana Newton-Raphsonova metoda je varijacija Newton-Raphsonove metode koja uključuje korekciju ako se iteracija približava ekstremu funkcije. Ovo poboljšava konvergenciju i stabilnost metode.");
     }
   }, [metoda]);
 

@@ -95,11 +95,12 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
     <div className="calculator-container">
       <h3>Rezultati iteracija:</h3>
       <div className="calculator-container-plus">
-      <div className="form-section">
+      <form className="form-section">
         <div className="form-item">
           <label>
             a:
             <input
+              required
               type="number"
               value={a}
               onChange={(e) => setA(Number(e.target.value))}
@@ -111,6 +112,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           <label>
             b:
             <input
+              required
               type="number"
               value={b}
               onChange={(e) => setB(Number(e.target.value))}
@@ -122,6 +124,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           <label>
             Funkcija:
             <input
+              required
               type="text"
               value={funct}
               onChange={(e) => setFunct(e.target.value)}
@@ -134,6 +137,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           <label>
             Preciznost:
             <input
+              required
               type="number"
               value={preciznost}
               onChange={(e) => setPreciznost(Number(e.target.value))}
@@ -145,6 +149,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           <label>
             Decimalna mesta:
             <input
+              required
               type="text"
               value={decimals}
               onChange={(e) => setDecimals(Number(e.target.value))}
@@ -157,7 +162,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
             Izračunaj
           </button>
         </div>
-      </div>
+      </form>
       <div className="results-section">
         <table className="results-table">
           <thead>

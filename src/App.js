@@ -145,13 +145,13 @@ function App() {
                 </div>
               </div>
               <div className="variables"></div>
-            <div className='method-explanation'>
               <Routes>
                 <Route path='/polovljenje' element={<Objasnjenje metoda="polovljenje" />} />
                 <Route path='/regula-falsi' element={<Objasnjenje metoda="regula"/>} />
                 <Route path='/prosta-iteracija' element={<Objasnjenje metoda="prosta-iteracija"/>} />
+                <Route path='/newton' element={<Objasnjenje metoda="newton"/>} />
+                <Route path='/modifikovan-newton' element={<Objasnjenje metoda="modifikovan-newton"/>} />
               </Routes>
-            </div>
             </div>
           </>
           <div className='all-results'>

@@ -3,6 +3,7 @@ import useCalculator from "../CalculateHook";
 
 const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const { calculate } = useCalculator();
+  const [funct, setFunct] = useState();
   const [initialX, setInitialX] = useState();
   const [tolerance, setTolerance] = useState();
   const [decimalPlaces, setDecimalPlaces] = useState();
@@ -11,9 +12,8 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const [infinity, setInfinity] = useState(false);
 
   useEffect(() => {
-    console.log(method)
-    console.log(expression)
-  }, [method, expression])
+    setFunct(expression);
+  }, [expression])
 
   useEffect(() => {
     expression = expression.replace(/e/g, 2.718281828459045)
@@ -46,8 +46,6 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
     let count = 0;
     
     while ((Math.abs(xiPlus1 - xi) > tolerance || count === 0)  &&  typeof(xiPlus1) == "number") {
-      console.log("xiPlus1: ",xiPlus1)
-      console.log("xi: ",xi)
       result.push({
         iteration: count + 1,
         xi: xi.toFixed(decimalPlaces),
@@ -83,7 +81,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   };
 
   return (
-    <div className="calculator-container">
+    <form className="calculator-container">
       <h3>Rezultati iteracija:</h3>
       <div className="calculator-container-plus">
         <div className="form-section">
@@ -91,6 +89,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             <label>
               Početna vrijednost x:
               <input
+                required
                 type="number"
                 value={initialX}
                 onChange={(e) => setInitialX(Number(e.target.value))}
@@ -99,9 +98,23 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             </label>
           </div>
           <div className="form-item">
+          <label>
+            Funkcija:
+            <input
+              required
+              type="text"
+              value={funct}
+              onChange={(e) => setFunct(e.target.value)}
+              disabled
+              className="form-input-disabled"
+            />
+          </label>
+        </div>
+          <div className="form-item">
             <label>
               Preciznost:
               <input
+                required
                 type="number"
                 value={tolerance}
                 onChange={(e) => setTolerance(Number(e.target.value))}
@@ -113,6 +126,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             <label>
               Decimalna mjesta:
               <input
+                required
                 type="number"
                 value={decimalPlaces}
                 onChange={(e) => setDecimalPlaces(Number(e.target.value))}
@@ -157,7 +171,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
