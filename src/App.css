@@ -163,7 +163,15 @@ button {
 .operators button {
   background-color: #2196f3;
   color: #fff;
-  width: 60px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#factorial{
+  width: 85px;
+  grid-column: 3 / 5;
 }
 
 .control-buttons {

@@ -3,10 +3,10 @@ import useCalculator from "../CalculateHook";
 
 const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const { calculate } = useCalculator();
-  const [funct, setFunct] = useState();
+  const [funct, setFunct] = useState(expression);
   const [initialX, setInitialX] = useState();
-  const [tolerance, setTolerance] = useState();
-  const [decimalPlaces, setDecimalPlaces] = useState();
+  const [preciznost, setPreciznost] = useState();
+  const [decimals, setDecimals] = useState();
   const [iterations, setIterations] = useState([]);
   const [finalResult, setFinalResult] = useState(null);
   const [infinity, setInfinity] = useState(false);
@@ -45,12 +45,12 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
     }
     let count = 0;
     
-    while ((Math.abs(xiPlus1 - xi) > tolerance || count === 0)  &&  typeof(xiPlus1) == "number") {
+    while ((Math.abs(xiPlus1 - xi) > preciznost || count === 0)  &&  typeof(xiPlus1) == "number") {
       result.push({
         iteration: count + 1,
-        xi: xi.toFixed(decimalPlaces),
-        xiPlus1: xiPlus1.toFixed(decimalPlaces),
-        difference: count === 0 ? "-" : (xiPlus1 - xi).toFixed(decimalPlaces),
+        xi: xi.toFixed(decimals),
+        fx: expressionValue.toFixed(decimals),
+        difference: count === 0 ? "-" : (xiPlus1 - xi).toFixed(decimals),
       });
       
       count += 1;
@@ -69,9 +69,9 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
     if(typeof(xiPlus1) == "number"){
       result.push({
         iteration: count + 1,
-        xi: xi.toFixed(decimalPlaces),
-        xiPlus1: xiPlus1.toFixed(decimalPlaces),
-        difference: (xiPlus1 - xi).toFixed(decimalPlaces),
+        xi: xi.toFixed(decimals),
+        fx: expressionValue.toFixed(decimals),
+        difference: (xiPlus1 - xi).toFixed(decimals),
       });
     }else{
       setInfinity(true)
@@ -114,10 +114,11 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             <label>
               Preciznost:
               <input
+                placeholder="Npr. 0.001"
                 required
                 type="number"
-                value={tolerance}
-                onChange={(e) => setTolerance(Number(e.target.value))}
+                value={preciznost}
+                onChange={(e) => setPreciznost(Number(e.target.value))}
                 className="form-input"
               />
             </label>
@@ -128,8 +129,8 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
               <input
                 required
                 type="number"
-                value={decimalPlaces}
-                onChange={(e) => setDecimalPlaces(Number(e.target.value))}
+                value={decimals}
+                onChange={(e) => setDecimals(Number(e.target.value))}
                 className="form-input"
               />
             </label>
@@ -146,7 +147,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
               <tr>
                 <th>Iteracija</th>
                 <th>xi</th>
-                <th>xi+1</th>
+                <th>f(x)</th>
                 <th>Razlika</th>
               </tr>
             </thead>
@@ -155,7 +156,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
                 <tr key={index}>
                   <td>{iteration.iteration}</td>
                   <td>{iteration.xi}</td>
-                  <td>{iteration.xiPlus1}</td>
+                  <td>{iteration.fx}</td>
                   <td>{iteration.difference}</td>
                 </tr>
               ))}

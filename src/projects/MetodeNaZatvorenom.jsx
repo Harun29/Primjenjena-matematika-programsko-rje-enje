@@ -40,7 +40,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
     let aVal = a;
     let bVal = b;
     let c;
-    if(method == "bisection"){
+    if(method === "bisection"){
       c = (aVal + bVal) / 2;
     }else{
       c = bVal - ((bVal - aVal) / (fb - fa)) * fb;
@@ -49,14 +49,14 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
     let previousC = c;
     let count = 0;
 
-    while (Math.abs(c - previousC) > preciznost || count == 0) {
+    while (Math.abs(c - previousC) > preciznost || count === 0) {
       result.push({
         a: aVal.toFixed(decimals),
         fa: fa.toFixed(decimals),
         b: bVal.toFixed(decimals),
         fb: fb.toFixed(decimals),
         c: c.toFixed(decimals),
-        difference: count == 0 ? "-" : (c - previousC).toFixed(decimals)
+        difference: count === 0 ? "-" : (c - previousC).toFixed(decimals)
       });
 
       count += 1;
@@ -70,7 +70,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
       }
 
       previousC = c;
-      if(method == "bisection"){
+      if(method === "bisection"){
         c = (aVal + bVal) / 2;
       }else{
         c = bVal - ((bVal - aVal) / (fb - fa)) * fb;
@@ -137,6 +137,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           <label>
             Preciznost:
             <input
+              placeholder="Npr. 0.001"
               required
               type="number"
               value={preciznost}
@@ -172,7 +173,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
               <th>fa</th>
               <th>b</th>
               <th>fb</th>
-              {method == "bisection" ? <th>c</th> : <th>xi</th>}
+              {method === "bisection" ? <th>c</th> : <th>xi</th>}
               <th>Razlika</th>
             </tr>
           </thead>
@@ -194,7 +195,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           {finalResult !== null && (
             <div>
               <h3>Finalni rezultat:</h3>
-              <p>{method == "bisection" ? `c: ${finalResult}` : `xi: ${finalResult}`}</p>
+              <p>{method === "bisection" ? `c: ${finalResult}` : `xi: ${finalResult}`}</p>
             </div>
           )}
         </div>

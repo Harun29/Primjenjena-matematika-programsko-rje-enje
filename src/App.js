@@ -129,7 +129,7 @@ function App() {
                       handleClick("pi")}>Pi</button>
                     <button onClick={() =>
                       handleClick("e")}>e</button>
-                    <button onClick={() =>
+                    <button id='factorial' onClick={() =>
                       handleClick("fact(")}>Factorial</button>
                   </div>
                   <div className="control-buttons">
