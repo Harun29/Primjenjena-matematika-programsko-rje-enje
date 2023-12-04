@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useCalculator from "../CalculateHook";
+import useCalculator from "../hooks/CalculateHook";
 
 const MetodeNaZatvorenom = ({ expression, method }) => {
   const { calculate } = useCalculator();

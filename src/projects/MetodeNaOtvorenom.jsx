@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import useCalculator from "../CalculateHook";
+import useCalculator from "../hooks/CalculateHook";
+import { useRef } from "react";
 
 const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const { calculate } = useCalculator();
@@ -11,13 +12,12 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const [finalResult, setFinalResult] = useState(null);
   const [infinity, setInfinity] = useState(false);
 
-  useEffect(() => {
-    setFunct(expression);
-  }, [expression])
+  const expressionRef = useRef(expression);
 
   useEffect(() => {
-    expression = expression.replace(/e/g, 2.718281828459045)
-  }, [expression])
+    expressionRef.current = expression;
+    setFunct(expression);
+  }, [expression]);
 
   const handleCalculateClick = () => {
     const iterationsResult = simpleIteration();
@@ -166,7 +166,8 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             {finalResult !== null && (
               <div>
                 <h3>Finalni rezultat:</h3>
-                <p>{`xi+1: ${finalResult}`}</p>
+                {infinity ? <p>divergira</p>:
+                <p>{`xi+1: ${finalResult}`}</p>}
               </div>
             )}
           </div>
