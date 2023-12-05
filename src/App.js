@@ -78,6 +78,11 @@ function App() {
             <div className="calc-app">
               <div className="calc-body">
                 <div className="input-section">
+                  <Routes>
+                    <Route path='/prosta-iteracija' element={<label className='godx'>
+                        {"g(x): "}
+                      </label>} />
+                  </Routes>
                   <input
                     className="screen"
                     type="text"
@@ -162,7 +167,12 @@ function App() {
               <Route path='/newton' element={<MetodeNaOtvorenom expression={expression} derivative={izvod} method={"newton"}/>} />
               <Route path='/modifikovan-newton' element={<MetodeNaOtvorenom expression={expression} derivative={izvod} method={"modifikovana-newtonova"}/>} />
             </Routes>
-            <div id="test">function: {expression ? expression : 'sin(x)'}</div>
+            <div id="test">function: {expression ? expression : 'sin(x)'}
+              {expression.includes("e") ?
+              <div className='not-supported'>
+                Grafik ne podržava fukcije sa brojem e, proračun je i dalje tačan.
+              </div> : null}
+            </div>
           </div>
         </header>
       </div>

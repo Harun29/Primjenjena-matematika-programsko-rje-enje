@@ -328,4 +328,22 @@ button {
   flex-direction: column-reverse;
   font-size: 28px;
   margin-top: 40px;
+  position: relative;  
+}
+
+.godx{
+  font-size: 24px;
+}
+
+.not-supported{
+  background-color: rgba(50, 50, 50, 0.5);
+  position: absolute;
+  top: 20px;
+  bottom: 50px;
+  left: 40px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
 }
