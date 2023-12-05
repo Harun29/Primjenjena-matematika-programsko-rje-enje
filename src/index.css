@@ -347,3 +347,73 @@ button {
   align-items: center;
   padding: 40px;
 }
+
+@media only screen and (max-width: 768px) {
+
+  .objasnjenje{
+    height: 300px;
+  }
+
+  .App{
+    width: calc(100% - 40px);
+    left: 0;
+    padding: 0;
+    position: absolute;
+    flex-direction: column;
+    margin: 20px;
+  }
+
+  .App-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .calc-app{
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+  .calc-body{
+    width: 100%;
+    padding: 20px 0;
+    min-height: 550px;
+  }
+
+  .control-buttons{
+    margin: 0;
+    flex-direction: row;
+  }
+
+  .button-section{
+    flex-direction: column;
+  }
+
+  .form-section{
+    margin: 0 0 50px 0;
+    width: 100%;
+  }
+
+  .calculator-container-plus{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .all-results{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .function-plot{
+    width: 90%;
+  }
+
+  #test{
+    margin-bottom: 50px;
+  }
+
+}
