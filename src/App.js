@@ -7,7 +7,6 @@ import functionPlot from 'function-plot'
 import { derivative, parse } from 'mathjs';
 import MetodeNaZatvorenom from './projects/MetodeNaZatvorenom';
 import MetodeNaOtvorenom from './projects/MetodeNaOtvorenom';
-import { div } from 'interval-arithmetic';
 
 function App() {
   const [expression, setExpression] = useState("");
