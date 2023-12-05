@@ -21,7 +21,7 @@ function App() {
     }else(
       setMobile(false)
     )
-  }, [window.innerWidth])
+  }, [])
 
   const handleDropdown = () => {
     setDropdown(!dropdown)
