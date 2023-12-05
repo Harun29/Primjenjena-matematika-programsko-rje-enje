@@ -7,10 +7,25 @@ import functionPlot from 'function-plot'
 import { derivative, parse } from 'mathjs';
 import MetodeNaZatvorenom from './projects/MetodeNaZatvorenom';
 import MetodeNaOtvorenom from './projects/MetodeNaOtvorenom';
+import { div } from 'interval-arithmetic';
 
 function App() {
   const [expression, setExpression] = useState("");
   const [izvod, setIzvod] = useState("");
+  const [dropdown, setDropdown] = useState(false)
+  const [mobile, setMobile] = useState()
+
+  useEffect(() => {
+    if(window.innerWidth <= 768){
+      setMobile(true)
+    }else(
+      setMobile(false)
+    )
+  }, [window.innerWidth])
+
+  const handleDropdown = () => {
+    setDropdown(!dropdown)
+  }
 
   useEffect(() => {
     try {
@@ -72,7 +87,21 @@ function App() {
   return (
     <Router>
       <div className="App">
-      <Navbar />
+      <div className='dropdown'>
+        {mobile &&
+        <div className='dropdown-menu'>
+          <div className="header">
+            <h1>PMIS</h1>
+          </div>
+          <button onClick={handleDropdown}>
+            <p>
+              Metode
+            </p>
+          </button>
+        </div>
+        }
+        {(dropdown || !mobile) && <Navbar />}
+        </div>
         <header className="App-header">
           <>
             <div className="calc-app">
