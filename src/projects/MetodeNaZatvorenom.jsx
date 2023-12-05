@@ -79,7 +79,6 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
       fc = calculate(funct.replace(/x/g, c));
     }
 
-    // Dodaj poslednju iteraciju
     result.push({
       a: aVal.toFixed(decimals),
       fa: fa.toFixed(decimals),
