@@ -15,7 +15,8 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
     setFunct(expression);
   }, [expression])
 
-  const handleCalculateClick = () => {
+  const handleCalculateClick = (e) => {
+    e.preventDefault();
     const iterationsResult = polovljenjeIntervala();
     setIterations(iterationsResult);
 
@@ -95,14 +96,13 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
     <div className="calculator-container">
       <h3>Rezultati iteracija:</h3>
       <div className="calculator-container-plus">
-      <form className="form-section">
+      <form onSubmit={handleCalculateClick} className="form-section">
         <div className="form-item">
           <label>
             a:
             <input
               required
-              type="number"
-              value={a}
+              type="text"
               onChange={(e) => setA(Number(e.target.value))}
               className="form-input"
             />
@@ -113,8 +113,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
             b:
             <input
               required
-              type="number"
-              value={b}
+              type="text"
               onChange={(e) => setB(Number(e.target.value))}
               className="form-input"
             />
@@ -139,8 +138,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
             <input
               placeholder="Npr. 0.001"
               required
-              type="number"
-              value={preciznost}
+              type="text"
               onChange={(e) => setPreciznost(Number(e.target.value))}
               className="form-input"
             />
@@ -151,7 +149,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
             Decimalna mesta:
             <input
               required
-              type="text"
+              type="number"
               value={decimals}
               onChange={(e) => setDecimals(Number(e.target.value))}
               className="form-input"
@@ -159,7 +157,7 @@ const MetodeNaZatvorenom = ({ expression, method }) => {
           </label>
         </div>
         <div className="form-item">
-          <button onClick={handleCalculateClick} className="calculate-button">
+          <button type="submit" className="calculate-button">
             Izračunaj
           </button>
         </div>

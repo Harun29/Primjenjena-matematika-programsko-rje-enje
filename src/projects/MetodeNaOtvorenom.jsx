@@ -10,8 +10,6 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
   const [decimals, setDecimals] = useState();
   const [iterations, setIterations] = useState([]);
   const [finalResult, setFinalResult] = useState(null);
-  const [infinity, setInfinity] = useState(false);
-
   const expressionRef = useRef(expression);
 
   useEffect(() => {
@@ -19,12 +17,13 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
     setFunct(expression);
   }, [expression]);
 
-  const handleCalculateClick = () => {
+  const handleCalculateClick = (e) => {
+    e.preventDefault();
     const iterationsResult = simpleIteration();
     setIterations(iterationsResult);
 
     if (iterationsResult.length > 0) {
-      setFinalResult(iterationsResult[iterationsResult.length - 1].xiPlus1);
+      setFinalResult(iterationsResult[iterationsResult.length - 1].xi);
     } else {
       setFinalResult(null);
     }
@@ -44,17 +43,19 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
       console.log("type of xiPlus1: ",typeof(xiPlus1))
     }
     let count = 0;
+    let prevXi;
     
     while ((Math.abs(xiPlus1 - xi) > preciznost || count === 0)  &&  typeof(xiPlus1) == "number") {
       result.push({
-        iteration: count + 1,
+        iteration: count,
         xi: xi.toFixed(decimals),
         fx: expressionValue.toFixed(decimals),
-        difference: count === 0 ? "-" : (xiPlus1 - xi).toFixed(decimals),
+        difference: count === 0 ? "-" : (xi - prevXi).toFixed(decimals),
       });
       
       count += 1;
       
+      prevXi = xi;
       xi = xiPlus1;
       expressionValue = calculate(expression.replace(/x/g, xi))
       if(method === "newton"){
@@ -66,22 +67,18 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
       }
     }
     
-    if(typeof(xiPlus1) == "number"){
-      result.push({
-        iteration: count + 1,
-        xi: xi.toFixed(decimals),
-        fx: expressionValue.toFixed(decimals),
-        difference: (xiPlus1 - xi).toFixed(decimals),
-      });
-    }else{
-      setInfinity(true)
-    }
+    result.push({
+      iteration: count + 1,
+      xi: xi.toFixed(decimals),
+      fx: expressionValue.toFixed(decimals),
+      difference: (xi - prevXi).toFixed(decimals),
+    });
 
     return result;
   };
 
   return (
-    <form className="calculator-container">
+    <form onSubmit={handleCalculateClick} className="calculator-container">
       <h3>Rezultati iteracija:</h3>
       <div className="calculator-container-plus">
         <div className="form-section">
@@ -90,8 +87,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
               Početna vrijednost x:
               <input
                 required
-                type="number"
-                value={initialX}
+                type="float"
                 onChange={(e) => setInitialX(Number(e.target.value))}
                 className="form-input"
               />
@@ -116,8 +112,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
               <input
                 placeholder="Npr. 0.001"
                 required
-                type="number"
-                value={preciznost}
+                type="text"
                 onChange={(e) => setPreciznost(Number(e.target.value))}
                 className="form-input"
               />
@@ -136,7 +131,7 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             </label>
           </div>
           <div className="form-item">
-            <button onClick={handleCalculateClick} className="calculate-button">
+            <button type="submit" className="calculate-button">
               Izračunaj
             </button>
           </div>
@@ -166,8 +161,8 @@ const MetodeNaOtvorenom = ({ expression, derivative, method }) => {
             {finalResult !== null && (
               <div>
                 <h3>Finalni rezultat:</h3>
-                {infinity ? <p>divergira</p>:
-                <p>{`xi+1: ${finalResult}`}</p>}
+                {finalResult === "Infinity" ? <strong>divergira</strong>:
+                <p>{`xi: ${finalResult}`}</p>}
               </div>
             )}
           </div>
